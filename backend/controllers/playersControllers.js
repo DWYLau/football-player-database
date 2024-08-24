@@ -24,7 +24,7 @@ const playersDetailsGet = asyncHandler(async (request, response) => {
   }
 })
 
-// POST REQUEST FOR INSERTING PLAYER
+// post request for creating a club
 
 // PUT REQUEST FOR UPDATING PLAYER
 
