@@ -13,6 +13,8 @@ async function getPlayerById(id) {
   return rows
 }
 
+// IMPLEMENT DELETE AND UPDATE PLAYER
+
 // clubs table queries
 
 async function getAllClubs() {
@@ -26,29 +28,32 @@ async function getClubById(id) {
 }
 
 async function insertClub(club, league) {
-  await pool.query("INSERT INTO clubs (club, league) VALUES ($1, $2)", [
-    club,
-    league,
-  ])
+  const result = await pool.query(
+    "INSERT INTO clubs (club, league) VALUES ($1, $2)",
+    [club, league]
+  )
+  return result.rowCount
 }
 
 async function updateClub(id, club, league) {
-  await pool.query("UPDATE clubs SET club = $2, league = $3 WHERE id = $1", [
-    id,
-    club,
-    league,
-  ])
+  const result = await pool.query(
+    "UPDATE clubs SET club = $2, league = $3 WHERE id = $1",
+    [id, club, league]
+  )
+  return result.rowCount
 }
 
-// FUNCTION UPDATE PLAYER WHERE ID = ?
-
-// FUNCTION DELETE PLAYER WHERE ID = ?
+async function deleteClub(id) {
+  const result = await pool.query("DELETE FROM clubs WHERE id = $1", [id])
+  return result.rowCount
+}
 
 export default {
   getAllClubs,
   getClubById,
   insertClub,
   updateClub,
+  deleteClub,
   getAllPlayers,
   getPlayerById,
 }

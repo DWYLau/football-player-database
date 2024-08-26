@@ -14,6 +14,10 @@ app.use(express.urlencoded({ extended: true }))
 // Routes
 app.use("/players", playersRouter)
 app.use("/clubs", clubsRouter)
+app.use((error, request, response, next) => {
+  console.log(error)
+  response.status(500).send(error)
+})
 
 app.get("/", (request, response) => {
   return response.status(234).send("Football Player Database Server")

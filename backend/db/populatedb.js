@@ -6,19 +6,19 @@ const { Client } = pkg
 const SQL = `
 CREATE TABLE IF NOT EXISTS clubs (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  club VARCHAR(50) NOT NULL,
+  club VARCHAR(50) NOT NULL UNIQUE,
   league VARCHAR(50) NOT NULL,
   club_image VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS players (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  player VARCHAR(50) NOT NULL,
+  player VARCHAR(50) NOT NULL UNIQUE,
   age INTEGER NOT NULL,
   country VARCHAR(50) NOT NULL,
   position VARCHAR(50) NOT NULL,
   club INTEGER REFERENCES clubs(id),
-  player_image VARCHAR(255),
+  player_image VARCHAR(255) UNIQUE,
   country_image VARCHAR(255)
 );
 

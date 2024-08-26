@@ -1,6 +1,7 @@
 import express from "express"
 import {
   clubsCreatePost,
+  clubsDelete,
   clubsDetailsGet,
   clubsListGet,
   clubsUpdatePut,
@@ -14,5 +15,7 @@ clubsRouter.get("/:id", clubsDetailsGet)
 clubsRouter.post("/", clubsCreatePost)
 
 clubsRouter.put("/:id", clubsUpdatePut)
+
+clubsRouter.delete("/:id", clubsDelete)
 
 export default clubsRouter
