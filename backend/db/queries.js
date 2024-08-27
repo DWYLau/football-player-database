@@ -48,9 +48,25 @@ async function deleteClub(id) {
   return result.rowCount
 }
 
+// league queries
+
+async function getAllLeagues() {
+  const { rows } = await pool.query("SELECT league FROM leagues")
+  return rows
+}
+
+async function getClubsByLeague(id) {
+  const { rows } = await pool.query("SELECT * FROM clubs WHERE league = $1", [
+    id,
+  ])
+  return rows
+}
+
 export default {
   getAllClubs,
   getClubById,
+  getAllLeagues,
+  getClubsByLeague,
   insertClub,
   updateClub,
   deleteClub,

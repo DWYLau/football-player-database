@@ -4,10 +4,15 @@ import { host, user, db, password, port } from "../config.js"
 const { Client } = pkg
 
 const SQL = `
+CREATE TABLE IF NOT EXISTS leagues (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  league VARCHAR(50) NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS clubs (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   club VARCHAR(50) NOT NULL UNIQUE,
-  league VARCHAR(50) NOT NULL,
+  league INTEGER REFERENCES leagues(id),
   club_image VARCHAR(255)
 );
 
@@ -22,13 +27,22 @@ CREATE TABLE IF NOT EXISTS players (
   country_image VARCHAR(255)
 );
 
+INSERT INTO leagues (league)
+VALUES
+ ('Premier League'),
+  ('La Liga'),
+  ('Bundesliga'),
+  ('Serie A'),
+  ('Ligue 1'),
+  ('Eredivisie');
+
 INSERT INTO clubs (club, league)
 VALUES 
-  ('Brighton', 'Premier League'),
-  ('Arsenal', 'Premier League'),
-  ('Real Madrid', 'La Liga'),
-  ('Borussia Dortmund', 'Bundesliga'),
-  ('Inter Milan', 'Serie A');
+  ('Brighton', 1),
+  ('Arsenal', 1),
+  ('Real Madrid', 2),
+  ('Borussia Dortmund', 3),
+  ('Inter Milan', 4);
 
 INSERT INTO players (player, age, country, position, club)
 VALUES
