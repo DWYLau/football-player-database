@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS players (
 
 INSERT INTO leagues (league)
 VALUES
- ('Premier League'),
+  ('Premier League'),
   ('La Liga'),
   ('Bundesliga'),
   ('Serie A'),

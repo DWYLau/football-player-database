@@ -3,7 +3,7 @@ import pool from "./pool.js"
 // players table queries
 async function getAllPlayers() {
   const { rows } = await pool.query(
-    "SELECT * FROM players AS p INNER JOIN clubs AS c ON p.club = c.id"
+    "SELECT * FROM players AS p INNER JOIN clubs AS c ON p.club = c.id INNER JOIN leagues AS l ON c.league = l.id"
   )
   return rows
 }
@@ -13,7 +13,26 @@ async function getPlayerById(id) {
   return rows
 }
 
-// IMPLEMENT DELETE AND UPDATE PLAYER
+async function insertPlayer(player, age, country, position, club) {
+  const result = await pool.query(
+    "INSERT INTO players (player, age, country, position, club) VALUES ($1, $2, $3, $4, $5)",
+    [player, age, country, position, club]
+  )
+  return result.rowCount
+}
+
+async function updatePlayer(id, player, age, country, position, club) {
+  const result = await pool.query(
+    "UPDATE players SET player = $2, age = $3, country = $4, position = $5, club = $6 WHERE id = $1",
+    [id, player, age, country, position, club]
+  )
+  return result.rowCount
+}
+
+async function deletePlayer(id) {
+  const result = await pool.query("DELETE FROM players WHERE id = $1", [id])
+  return result.rowCount
+}
 
 // clubs table queries
 
@@ -23,7 +42,10 @@ async function getAllClubs() {
 }
 
 async function getClubById(id) {
-  const { rows } = await pool.query("SELECT * FROM clubs WHERE id = $1", [id])
+  const { rows } = await pool.query(
+    "SELECT * FROM clubs AS c INNER JOIN leagues AS l ON c.league = l.id WHERE l.id = $1",
+    [id]
+  )
   return rows
 }
 
@@ -48,7 +70,7 @@ async function deleteClub(id) {
   return result.rowCount
 }
 
-// league queries
+// league table queries
 
 async function getAllLeagues() {
   const { rows } = await pool.query("SELECT league FROM leagues")
@@ -72,4 +94,7 @@ export default {
   deleteClub,
   getAllPlayers,
   getPlayerById,
+  insertPlayer,
+  updatePlayer,
+  deletePlayer,
 }
