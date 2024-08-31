@@ -13,6 +13,22 @@ async function getPlayerById(id) {
   return rows
 }
 
+async function getPlayersByPosition(position) {
+  const { rows } = await pool.query(
+    "SELECT * FROM players WHERE position = $1",
+    [position]
+  )
+  return rows
+}
+
+async function getPlayersByCountry(country) {
+  const { rows } = await pool.query(
+    "SELECT * FROM players WHERE country = $1",
+    [country]
+  )
+  return rows
+}
+
 async function insertPlayer(player, age, country, position, club) {
   const result = await pool.query(
     "INSERT INTO players (player, age, country, position, club) VALUES ($1, $2, $3, $4, $5)",
@@ -94,6 +110,8 @@ export default {
   deleteClub,
   getAllPlayers,
   getPlayerById,
+  getPlayersByPosition,
+  getPlayersByCountry,
   insertPlayer,
   updatePlayer,
   deletePlayer,

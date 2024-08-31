@@ -1,21 +1,24 @@
 import express from "express"
 import {
+  playersCountryGet,
   playersCreatePost,
   playersDelete,
   playersDetailsGet,
   playersListGet,
+  playersPositionGet,
   playersUpdatePut,
 } from "../controllers/playersControllers.js"
 
 const playersRouter = express.Router()
 
 playersRouter.get("/", playersListGet)
+playersRouter.get("/position/:position", playersPositionGet)
+playersRouter.get("/country/:country", playersCountryGet)
+
 playersRouter.get("/:id", playersDetailsGet)
 
-// POST REQUEST FOR INSERTING PLAYER
 playersRouter.post("/", playersCreatePost)
-// PUT REQUEST FOR UPDATING PLAYER
 playersRouter.put("/:id", playersUpdatePut)
-// DELETE REQUEST FOR DELETING PLAYER
 playersRouter.delete("/:id", playersDelete)
+
 export default playersRouter

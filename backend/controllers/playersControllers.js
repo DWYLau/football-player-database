@@ -12,6 +12,28 @@ const playersListGet = asyncHandler(async (request, response) => {
   }
 })
 
+const playersPositionGet = asyncHandler(async (request, response) => {
+  const { position } = request.params
+  const players = await db.getPlayersByPosition(position)
+
+  if (!players) {
+    response.status(404).send("Players by position not found!")
+  } else {
+    response.status(200).json({ count: players.length, players: players })
+  }
+})
+
+const playersCountryGet = asyncHandler(async (request, response) => {
+  const { country } = request.params
+  const players = await db.getPlayersByCountry(country)
+
+  if (!players) {
+    response.status(404).send("Players by country not found!")
+  } else {
+    response.status(200).json({ count: players.length, players: players })
+  }
+})
+
 const playersDetailsGet = asyncHandler(async (request, response) => {
   const { id } = request.params
   const player = await db.getPlayerById(id)
@@ -97,6 +119,8 @@ const playersDelete = asyncHandler(async (request, response) => {
 
 export {
   playersListGet,
+  playersPositionGet,
+  playersCountryGet,
   playersDetailsGet,
   playersCreatePost,
   playersUpdatePut,
