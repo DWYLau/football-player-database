@@ -3,6 +3,7 @@ import { serverPort } from "./config.js"
 import playersRouter from "./routes/playersRouter.js"
 import clubsRouter from "./routes/clubsRouter.js"
 import leaguesRouter from "./routes/leaguesRouter.js"
+import cors from "cors"
 
 const app = express()
 const PORT = serverPort || 4000
@@ -11,6 +12,13 @@ const PORT = serverPort || 4000
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(
+  cors({
+    origin: "http://localhost:4000/",
+    methods: ["GET,", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+)
 
 // Routes
 app.use("/players", playersRouter)
