@@ -50,6 +50,15 @@ async function deletePlayer(id) {
   return result.rowCount
 }
 
+// CHECK LATER
+async function searchPlayer(name) {
+  const { rows } = await pool.query(
+    "SELECT * FROM players AS p INNER JOIN clubs AS c ON p.club = c.id INNER JOIN leagues AS l ON c.league = l.id WHERE p.name LIKE $1",
+    [`%${name}%`]
+  )
+  return rows
+}
+
 // clubs table queries
 
 async function getAllClubs() {
@@ -115,4 +124,5 @@ export default {
   insertPlayer,
   updatePlayer,
   deletePlayer,
+  searchPlayer,
 }

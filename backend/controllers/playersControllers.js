@@ -105,7 +105,7 @@ const playersUpdatePut = asyncHandler(async (request, response) => {
     }
   }
 })
-// DELETE REQUEST FOR DELETING PLAYER
+
 const playersDelete = asyncHandler(async (request, response) => {
   const { id } = request.params
   const rowsDeleted = await db.deletePlayer(id)
@@ -117,6 +117,19 @@ const playersDelete = asyncHandler(async (request, response) => {
   }
 })
 
+// CHECK LATER
+const playersSearchGet = asyncHandler(async (request, response) => {
+  let searchValue = request.query.value
+  searchValue = typeof searchValue === "string" ? searchValue : ""
+  const players = await db.searchPlayer(searchValue)
+
+  if (!players) {
+    response.status(404).send("Players by search not found!")
+  } else {
+    response.status(200).json({ count: players.length, players: players })
+  }
+})
+
 export {
   playersListGet,
   playersPositionGet,
@@ -125,4 +138,5 @@ export {
   playersCreatePost,
   playersUpdatePut,
   playersDelete,
+  playersSearchGet,
 }
