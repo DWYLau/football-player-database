@@ -5,11 +5,10 @@ const clubsListGet = asyncHandler(async (request, response) => {
   const clubs = await db.getAllClubs()
 
   if (!clubs) {
-    response.status(404).send("Clubs not found!")
-    return
+    return response.status(404).send("Clubs not found!")
   } else {
     console.log("Found clubs, sending data.")
-    response.status(200).json({ count: clubs.length, clubs: clubs })
+    return response.status(200).json({ count: clubs.length, clubs: clubs })
   }
 })
 
@@ -19,11 +18,10 @@ const clubsDetailsGet = asyncHandler(async (request, response) => {
   const club = await db.getClubById(id)
 
   if (!club) {
-    response.status(404).send("Club not found!")
-    return
+    return response.status(404).send("Club not found!")
   } else {
     console.log("Found club by ID, sending club details.")
-    response.status(200).json(club)
+    return response.status(200).json(club)
   }
 })
 

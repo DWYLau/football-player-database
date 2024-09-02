@@ -5,10 +5,11 @@ const playersListGet = asyncHandler(async (request, response) => {
   const players = await db.getAllPlayers()
 
   if (!players) {
-    response.status(404).send("Players not found!")
-    return
+    return response.status(404).send("Players not found!")
   } else {
-    response.status(200).json({ count: players.length, players: players })
+    return response
+      .status(200)
+      .json({ count: players.length, players: players })
   }
 })
 
@@ -17,9 +18,11 @@ const playersPositionGet = asyncHandler(async (request, response) => {
   const players = await db.getPlayersByPosition(position)
 
   if (!players) {
-    response.status(404).send("Players by position not found!")
+    return response.status(404).send("Players by position not found!")
   } else {
-    response.status(200).json({ count: players.length, players: players })
+    return response
+      .status(200)
+      .json({ count: players.length, players: players })
   }
 })
 
@@ -28,9 +31,11 @@ const playersCountryGet = asyncHandler(async (request, response) => {
   const players = await db.getPlayersByCountry(country)
 
   if (!players) {
-    response.status(404).send("Players by country not found!")
+    return response.status(404).send("Players by country not found!")
   } else {
-    response.status(200).json({ count: players.length, players: players })
+    return response
+      .status(200)
+      .json({ count: players.length, players: players })
   }
 })
 
@@ -39,10 +44,9 @@ const playersDetailsGet = asyncHandler(async (request, response) => {
   const player = await db.getPlayerById(id)
 
   if (!player) {
-    response.status(404).send("Player not found!")
-    return
+    return response.status(404).send("Player not found!")
   } else {
-    response.status(200).json(player)
+    return response.status(200).json(player)
   }
 })
 
@@ -120,13 +124,16 @@ const playersDelete = asyncHandler(async (request, response) => {
 // CHECK LATER
 const playersSearchGet = asyncHandler(async (request, response) => {
   let searchValue = request.query.value
+  console.log(searchValue)
   searchValue = typeof searchValue === "string" ? searchValue : ""
   const players = await db.searchPlayer(searchValue)
 
   if (!players) {
-    response.status(404).send("Players by search not found!")
+    return response.status(404).send("Players by search not found!")
   } else {
-    response.status(200).json({ count: players.length, players: players })
+    return response
+      .status(200)
+      .json({ count: players.length, players: players })
   }
 })
 

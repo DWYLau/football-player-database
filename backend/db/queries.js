@@ -51,12 +51,13 @@ async function deletePlayer(id) {
 }
 
 // CHECK LATER
-async function searchPlayer(name) {
-  const { rows } = await pool.query(
-    "SELECT * FROM players AS p INNER JOIN clubs AS c ON p.club = c.id INNER JOIN leagues AS l ON c.league = l.id WHERE p.name LIKE $1",
-    [`%${name}%`]
+async function searchPlayer(value) {
+  const queryValue = `%${value}%`
+  const result = await pool.query(
+    "SELECT * FROM players AS p INNER JOIN clubs AS c ON p.club = c.id INNER JOIN leagues AS l ON c.league = l.id WHERE p.player LIKE $1",
+    [queryValue]
   )
-  return rows
+  return result.rows
 }
 
 // clubs table queries
@@ -68,7 +69,7 @@ async function getAllClubs() {
 
 async function getClubById(id) {
   const { rows } = await pool.query(
-    "SELECT * FROM clubs AS c INNER JOIN leagues AS l ON c.league = l.id WHERE l.id = $1",
+    "SELECT * FROM clubs AS c INNER JOIN leagues AS l ON c.league = l.id WHERE c.id = $1",
     [id]
   )
   return rows
